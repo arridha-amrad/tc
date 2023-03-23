@@ -1,0 +1,47 @@
+@layer base {
+  html {
+    @apply bg-gray-100 text-gray-800;
+  }
+  html.dark {
+    @apply bg-black text-gray-200;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 1rem;
+  }
+  html::-webkit-scrollbar {
+    width: 0.5vw;
+    position: absolute;
+  }
+  html::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+  html.dark::-webkit-scrollbar-track {
+    background-color: #242424;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    @apply text-sm md:text-base;
+  }
+
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  textarea {
+    resize: none;
+  }
+}
