@@ -13,7 +13,7 @@ const FloatingLabelInput: FC<
       <input
         ref={inputRef}
         {...props}
-        className="peer px-[16px] pb-2.5 pt-6 border border-gray-300 dark:border-gray-700 bg-transparent focus:border-transparent focus:ring-4 focus:ring-blue-300 focus:ring-offset-0 outline-none w-full rounded-lg text-sm text-gray-900 dark:text-gray-200 md:text-base dark:focus:ring-blue-500"
+        className="peer px-[16px] pb-2.5 pt-6 border border-gray-300 dark:border-gray-700 bg-transparent focus:border-transparent focus:ring-4 focus:ring-blue-300 focus:ring-offset-0 outline-none w-full rounded-lg text-sm text-gray-900 dark:text-gray-200 md:text-base dark:focus:ring-blue-500 appearance-none"
         placeholder=" "
       />
       <label

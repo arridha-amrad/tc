@@ -23,11 +23,17 @@ const CreateTweetFeature = () => {
     //     formData.append("images", filesToUpload[i]);
     //   }
     // }
-    const id = v4();
-    createToast(`creating ${id} ...`);
+    setIsLoading(true);
+    try {
+      const id = v4();
+      createToast(`creating ${id} ...`);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const { onChange, onSubmit, state } = useForm(
+  const { onChange, onSubmit, state, isLoading, setIsLoading } = useForm(
     {
       tweet: "",
     },
@@ -55,7 +61,12 @@ const CreateTweetFeature = () => {
         </div>
         <div className="flex items-center relative justify-between px-3 py-2 border-t dark:border-gray-600">
           {/* <span className="w-100 h-1 bg-blue-500 absolute top-0 right-0 left-0"></span> */}
-          <Button type="submit" size="small" variant="fill-primary">
+          <Button
+            status={!state.tweet ? "not-allowed" : isLoading ? "loading" : "ok"}
+            type="submit"
+            size="small"
+            variant="fill-primary"
+          >
             Post
           </Button>
           <div className="flex pl-0 space-x-1 sm:pl-2 items-center">

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { User } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 import { TValidateUser } from './auth.dto';
@@ -17,6 +21,8 @@ export class AuthService {
   ): Promise<Omit<User, 'password'> | null> {
     const { identity, password } = data;
 
+    console.log(data);
+
     let user: User | null;
 
     try {
@@ -25,7 +31,7 @@ export class AuthService {
       } else {
         user = await this.userService.findOneByUsername(identity);
       }
-      if (!user) return null;
+      if (!user) throw new NotFoundException('User not found');
       const isMatch = await verify(user.password, password);
       if (!isMatch) {
         throw new BadRequestException('Invalid password');

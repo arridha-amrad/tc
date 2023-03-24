@@ -6,26 +6,26 @@ export const setToken = (newToken: string) => (token = newToken);
 
 export const getToken = () => token;
 
-const instance = axios.create({
+const axiosInstance = axios.create({
   baseURL: "http://localhost:5000/api",
   withCredentials: true,
 });
 
-instance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   config.headers["Authorization"] = getToken();
   return config;
 });
 
-instance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   async (err) => {
     if (err?.response?.status === 401) {
       try {
         const prevRequest = err.config;
-        const { data } = await instance.get("/user/refresh-token");
+        const { data } = await axiosInstance.get("/auth/refresh-token");
         setToken(data.token);
         prevRequest.headers["Authorization"] = data.token;
-        return instance(prevRequest);
+        return axiosInstance(prevRequest);
       } catch (err) {
         window.location.replace("/login");
       }
@@ -34,4 +34,4 @@ instance.interceptors.response.use(
   }
 );
 
-export default instance;
+export default axiosInstance;

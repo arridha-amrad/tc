@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import LabeledCheckBox from "../components/LabeledCheckBox";
 import useForm from "../hooks/useForm";
+import setButtonStatus from "../utils/setButtonStatus";
 
 const ResetPasswordFeature = () => {
   const send = async () => {};
@@ -13,6 +14,7 @@ const ResetPasswordFeature = () => {
     isShowPassword,
     setIsShowPassword,
     state,
+    isLoading,
   } = useForm(
     {
       password: "",
@@ -37,7 +39,12 @@ const ResetPasswordFeature = () => {
         Show Password
       </LabeledCheckBox>
 
-      <Button size="normal" variant="fill-primary" type="submit">
+      <Button
+        status={setButtonStatus(state.password, isLoading)}
+        size="normal"
+        variant="fill-primary"
+        type="submit"
+      >
         Login
       </Button>
     </form>

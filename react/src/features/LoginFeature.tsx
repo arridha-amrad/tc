@@ -3,31 +3,53 @@ import useForm from "../hooks/useForm";
 import Button from "../components/Button";
 import LabeledCheckBox from "../components/LabeledCheckBox";
 import Alert from "../components/Alert";
+import setButtonStatus from "../utils/setButtonStatus";
+import useLogin from "../hooks/auth/useLogin";
+import { useNavigate } from "react-router-dom";
+
+export type TLoginDTO = {
+  identity: string;
+  password: string;
+};
 
 const LoginFeature = () => {
+  const mutation = useLogin();
+  const navigate = useNavigate();
   const login = async () => {
-    console.log(state);
-    setAlert({
-      message: "login failure",
-      type: "danger",
-    });
+    setIsLoading(true);
+    try {
+      await mutation.mutateAsync(state);
+      navigate("/", { replace: true });
+    } catch (err: any) {
+      setAlert({
+        message: err.response.data.message,
+        type: "danger",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const {
     onChange,
+    isLoading,
+    setIsLoading,
+    setState,
     onSubmit,
     state,
     alert,
     isShowPassword,
     setAlert,
     setIsShowPassword,
-  } = useForm(
+  } = useForm<TLoginDTO>(
     {
       identity: "",
       password: "",
     },
     login
   );
+
+  const { identity, password } = state;
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-2">
@@ -54,7 +76,13 @@ const LoginFeature = () => {
         Show Password
       </LabeledCheckBox>
 
-      <Button size="normal" variant="fill-primary" type="submit">
+      <Button
+        status={setButtonStatus(state, isLoading)}
+        disabled={!identity || !password}
+        size="normal"
+        variant="fill-primary"
+        type="submit"
+      >
         Login
       </Button>
     </form>

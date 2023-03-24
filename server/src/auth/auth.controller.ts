@@ -20,7 +20,7 @@ import { Cookie } from 'src/utils/cookie';
 import { RefTokenGuard } from 'src/ref-token/ref-token.guard';
 import { TRefTokenPayload } from 'src/ref-token/ref-token.type';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
@@ -59,19 +59,19 @@ export class AuthController {
       if (!storedUser) throw new NotFoundException('User not found');
 
       const newAccToken = this.authService.createAccessToken(storedUser);
-      const newReftoken = this.authService.createRefreshToken(
+      const newRefToken = this.authService.createRefreshToken(
         storedToken.id,
         storedUser,
       );
 
       await this.refTokenService.update({
         id: storedToken.id,
-        value: newReftoken,
+        value: newRefToken,
       });
 
       res.cookie(
         Cookie.refreshTokenCookie,
-        `Bearer ${newReftoken}`,
+        `Bearer ${newRefToken}`,
         Cookie.cookieOptions,
       );
 

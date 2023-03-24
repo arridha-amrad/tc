@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { TAlert } from "../components/Alert";
 
 const useForm = <T>(initState: T, submitFunction: () => Promise<void>) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState(initState);
   const [alert, setAlert] = useState<TAlert | null>(null);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -18,7 +19,10 @@ const useForm = <T>(initState: T, submitFunction: () => Promise<void>) => {
   };
 
   return {
+    isLoading,
+    setIsLoading,
     state,
+    setState,
     onChange,
     onSubmit,
     alert,

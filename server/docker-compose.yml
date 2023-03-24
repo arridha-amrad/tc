@@ -1,0 +1,26 @@
+services:
+  db:
+    container_name: pg__twitter_clone__container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ari
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: twitter_clone
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_twitter_clone_volume:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4__twitter_clone__container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - '5050:80'
+
+volumes:
+  pg_twitter_clone_volume:

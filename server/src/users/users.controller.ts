@@ -1,26 +1,15 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Get,
-  Post,
-} from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { hash } from 'argon2';
 import { UsersService } from './users.service';
 import { TRegisterDTO } from './dto/register.dto';
-import { User } from '.prisma/client';
 
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Get()
-  async getAll() {
-    return this.userService.findAll();
-  }
-
-  @Post('/register')
-  async register(@Body() data: TRegisterDTO): Promise<User> {
+  @Post('register')
+  async register(@Body() data: TRegisterDTO) {
+    console.log('data : ', data);
     const { email, username, password } = data;
     try {
       const isUsernameRegistered = await this.userService.findOneByUsername(
@@ -38,7 +27,10 @@ export class UsersController {
       }
 
       const hashedPassword = await hash(password);
-      return this.userService.create({ ...data, password: hashedPassword });
+      this.userService.create({ ...data, password: hashedPassword });
+      return {
+        message: 'Registration is successful',
+      };
     } catch (error) {
       throw error;
     }

@@ -1,18 +1,40 @@
 import Alert from "../components/Alert";
-import Button from "../components/Button";
+import Button, { TBtnStatus } from "../components/Button";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import LabeledCheckBox from "../components/LabeledCheckBox";
 import useForm from "../hooks/useForm";
+import axiosInstance from "../utils/axiosInterceptor";
+import setButtonStatus from "../utils/setButtonStatus";
+
+type TState = {
+  username: string;
+  password: string;
+  email: string;
+};
 
 const RegisterFeature = () => {
   const register = async () => {
-    setAlert({
-      message: "register success",
-      type: "success",
-    });
+    try {
+      setIsLoading(true);
+      const { data } = await axiosInstance.post("/users/register", state);
+      setAlert({
+        message: data.message,
+        type: "success",
+      });
+      setState({ ...state, email: "", password: "", username: "" });
+    } catch (err: any) {
+      setAlert({
+        message: err.response.data.message,
+        type: "danger",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const {
+    isLoading,
+    setIsLoading,
     onChange,
     onSubmit,
     state,
@@ -20,7 +42,8 @@ const RegisterFeature = () => {
     setAlert,
     isShowPassword,
     setIsShowPassword,
-  } = useForm(
+    setState,
+  } = useForm<TState>(
     {
       username: "",
       email: "",
@@ -28,6 +51,7 @@ const RegisterFeature = () => {
     },
     register
   );
+  const { email, password, username } = state;
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-2">
@@ -61,7 +85,13 @@ const RegisterFeature = () => {
         Show Password
       </LabeledCheckBox>
 
-      <Button size="normal" variant="fill-primary" type="submit">
+      <Button
+        status={setButtonStatus(state, isLoading)}
+        disabled={!email || !username || !password}
+        size="normal"
+        variant="fill-primary"
+        type="submit"
+      >
         Login
       </Button>
     </form>
