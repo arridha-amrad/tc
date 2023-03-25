@@ -18,14 +18,21 @@ export class AccessGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const bearerToken = request.headers.authorization;
-    if (!bearerToken) return false;
-    const token = bearerToken.split(' ')[1];
+    const refreshToken = request.cookies.refreshToken;
+    const token = bearerToken?.split(' ')[1];
+
+    if (!token) {
+      if (refreshToken) {
+        throw new UnauthorizedException();
+      }
+      return false;
+    }
     try {
       const payload = this.jwtService.verify(token);
       request.user = payload as TAccessTokenPayload;
       return true;
     } catch (error) {
-      console.error(JSON.stringify(error));
+      console.error('access guard error', JSON.stringify(error));
       if (error && error.message === 'jwt expired') {
         throw new UnauthorizedException();
       }

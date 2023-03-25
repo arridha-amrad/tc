@@ -1,24 +1,19 @@
+import { RegisterDTO } from "../api/dtos/user.dto";
+import { registerAPI } from "../api/user.api";
 import Alert from "../components/Alert";
-import Button, { TBtnStatus } from "../components/Button";
+import Button from "../components/Button";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import LabeledCheckBox from "../components/LabeledCheckBox";
 import useForm from "../hooks/useForm";
-import axiosInstance from "../utils/axiosInterceptor";
 import setButtonStatus from "../utils/setButtonStatus";
-
-type TState = {
-  username: string;
-  password: string;
-  email: string;
-};
 
 const RegisterFeature = () => {
   const register = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axiosInstance.post("/users/register", state);
+      const result = await registerAPI(state);
       setAlert({
-        message: data.message,
+        message: result.message,
         type: "success",
       });
       setState({ ...state, email: "", password: "", username: "" });
@@ -43,7 +38,7 @@ const RegisterFeature = () => {
     isShowPassword,
     setIsShowPassword,
     setState,
-  } = useForm<TState>(
+  } = useForm<RegisterDTO>(
     {
       username: "",
       email: "",

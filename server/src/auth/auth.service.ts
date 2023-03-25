@@ -21,8 +21,6 @@ export class AuthService {
   ): Promise<Omit<User, 'password'> | null> {
     const { identity, password } = data;
 
-    console.log(data);
-
     let user: User | null;
 
     try {

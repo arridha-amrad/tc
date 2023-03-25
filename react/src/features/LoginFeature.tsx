@@ -6,11 +6,7 @@ import Alert from "../components/Alert";
 import setButtonStatus from "../utils/setButtonStatus";
 import useLogin from "../hooks/auth/useLogin";
 import { useNavigate } from "react-router-dom";
-
-export type TLoginDTO = {
-  identity: string;
-  password: string;
-};
+import { LoginDTO } from "../api/dtos/auth.dto";
 
 const LoginFeature = () => {
   const mutation = useLogin();
@@ -41,7 +37,7 @@ const LoginFeature = () => {
     isShowPassword,
     setAlert,
     setIsShowPassword,
-  } = useForm<TLoginDTO>(
+  } = useForm<LoginDTO>(
     {
       identity: "",
       password: "",

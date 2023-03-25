@@ -1,4 +1,5 @@
 import axios from "axios";
+import { refreshTokenAPI } from "../api/auth.api";
 
 let token = "";
 
@@ -12,7 +13,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  config.headers["Authorization"] = getToken();
+  config.headers["Authorization"] = `Bearer ${getToken()}`;
   return config;
 });
 
@@ -22,9 +23,9 @@ axiosInstance.interceptors.response.use(
     if (err?.response?.status === 401) {
       try {
         const prevRequest = err.config;
-        const { data } = await axiosInstance.get("/auth/refresh-token");
-        setToken(data.token);
-        prevRequest.headers["Authorization"] = data.token;
+        const { data } = await refreshTokenAPI();
+        setToken(data.accessToken);
+        prevRequest.headers["Authorization"] = `Bearer ${data.accessToken}`;
         return axiosInstance(prevRequest);
       } catch (err) {
         window.location.replace("/login");

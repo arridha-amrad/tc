@@ -33,7 +33,7 @@ const Button: FC<IProps & ButtonHTMLAttributes<HTMLButtonElement>> = ({
       : variant === "fill-danger"
       ? "bg-red-600 text-white hover:bg-red-700 focus:ring-red-300  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 disabled:bg-red-400"
       : variant === "outlined-primary"
-      ? "border border-gray-300 text-blue-500 hover:border-blue-300 hover:bg-blue-200 focus:ring-blue-300"
+      ? "border border-gray-300 dark:border-gray-600 text-blue-500 hover:border-blue-300 hover:bg-blue-200 focus:ring-blue-300"
       : "border border-red-300 text-red-500 hover:border-red-300 hover:bg-red-200 focus:ring-red-300";
   return (
     <button

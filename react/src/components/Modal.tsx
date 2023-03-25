@@ -34,7 +34,7 @@ const Modal: FC<TModal> = ({ children, isOpen, closeModal }) => {
     <>
       <div
         onClick={closeModal}
-        className="fixed inset-0 flex items-center bg-opacity-50 justify-center bg-black backdrop-blur-lg"
+        className="fixed inset-0 flex backdrop-blur items-center bg-opacity-50 justify-center bg-black z-[100]"
       >
         <div className="absolute top-10 left-10 -translate-x-1/2 z-50">
           <IconButton
