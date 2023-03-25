@@ -3,7 +3,9 @@ import { meAPI } from "../../api/auth.api";
 
 const useMe = () => {
   const qc = useQueryClient();
+  const authenticatedUser = qc.getQueryData(["auth"]);
   const query = useQuery({
+    enabled: !authenticatedUser,
     queryFn: meAPI,
     queryKey: ["auth"],
     retry: 0,

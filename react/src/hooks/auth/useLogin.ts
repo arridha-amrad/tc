@@ -11,8 +11,6 @@ const useLogin = () => {
     onSuccess({ data }, variables, context) {
       console.log("result : ", data);
       console.log("context : ", context);
-
-      qc.setQueryData(["auth"], data.user);
       setToken(data.accessToken);
     },
     onError(error, variables, context) {

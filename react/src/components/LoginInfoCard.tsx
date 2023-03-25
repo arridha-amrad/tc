@@ -3,12 +3,16 @@ import Avatar from "./Avatar";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import LogoutFeature from "../features/LogoutFeature";
 import SwitchThemeFeature from "../features/SwitchThemeFeature";
+import useMe from "../hooks/auth/useMe";
+import Spinner from "./Spinner";
 
 const LoginInfoCard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useOnClickOutside(ref, () => setIsOpen(false));
+
+  const { data, isFetching } = useMe();
 
   return (
     <section ref={ref} className="relative select-none">
@@ -31,11 +35,19 @@ const LoginInfoCard = () => {
         onClick={() => setIsOpen((val) => !val)}
         className="w-full h-20 dark:bg-slate-800 bg-slate-200 rounded-lg mb-4 flex justify-center items-center p-2 gap-4 cursor-pointer relative"
       >
-        <Avatar url="./img-3.jpeg" />
-        <div>
-          <h1 className="font-bold text-sm">Marcus Rashford</h1>
-          <p className="text-sm font-light">@rashford10</p>
-        </div>
+        {isFetching ? (
+          <div className="flex items-center justify-center">
+            <Spinner className="w-8 h-8" />
+          </div>
+        ) : (
+          <>
+            <Avatar url={data ? data.data.imageURL : "default"} />
+            <div>
+              <h1 className="font-bold text-sm">{data?.data.fullName}</h1>
+              <p className="text-sm font-light">@{data?.data.username}</p>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

@@ -12,13 +12,17 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
+  fullName  String?
   username  String   @unique
   email     String   @unique
   password  String
   imageURL  String   @default("default")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Token     Token[]
+  Tokens    Token[]
+  Likes     Like[]
+  Posts     Post[]
+  Tweets    Tweet[]
 
   @@map("users")
 }
@@ -32,4 +36,56 @@ model Token {
   userId    String
 
   @@map("tokens")
+}
+
+model Like {
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@id([postId, userId])
+  @@map("likes")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  body      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Likes     Like[]
+  Medias    Media[]
+  Tweets    Tweet[]
+  parentId  String?
+  parent    Post?    @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Post[]   @relation("ParentChild")
+
+  @@map("posts")
+}
+
+model Tweet {
+  id        String   @id @default(cuid())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    String
+  userId    String
+  isRetweet Boolean  @default(false)
+
+  @@map("tweets")
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("media")
 }

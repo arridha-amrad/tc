@@ -9,7 +9,6 @@ export class UsersController {
 
   @Post('register')
   async register(@Body() data: TRegisterDTO) {
-    console.log('data : ', data);
     const { email, username, password } = data;
     try {
       const isUsernameRegistered = await this.userService.findOneByUsername(

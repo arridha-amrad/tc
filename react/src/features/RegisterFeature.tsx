@@ -16,7 +16,14 @@ const RegisterFeature = () => {
         message: result.message,
         type: "success",
       });
-      setState({ ...state, email: "", password: "", username: "" });
+      setState({
+        ...state,
+        email: "",
+        password: "",
+        username: "",
+        firstName: "",
+        lastName: "",
+      });
     } catch (err: any) {
       setAlert({
         message: err.response.data.message,
@@ -43,34 +50,53 @@ const RegisterFeature = () => {
       username: "",
       email: "",
       password: "",
+      firstName: "",
+      lastName: "",
     },
     register
   );
-  const { email, password, username } = state;
+  const { email, password, username, firstName, lastName } = state;
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-2">
       {!!alert && <Alert type={alert.type}>{alert.message}</Alert>}
 
+      <div className="flex flex-1 gap-3">
+        <FloatingLabelInput
+          labelText="First Name"
+          type="text"
+          onChange={onChange}
+          value={firstName}
+          name="firstName"
+        />
+        <FloatingLabelInput
+          labelText="Last Name"
+          type="text"
+          onChange={onChange}
+          value={lastName}
+          name="lastName"
+        />
+      </div>
+
       <FloatingLabelInput
         labelText="Email Address"
         type="email"
         onChange={onChange}
-        value={state.email}
+        value={email}
         name="email"
       />
       <FloatingLabelInput
         labelText="Username"
         type="text"
         onChange={onChange}
-        value={state.username}
+        value={username}
         name="username"
       />
       <FloatingLabelInput
         labelText="Password"
         type={`${isShowPassword ? "text" : "password"}`}
         onChange={onChange}
-        value={state.password}
+        value={password}
         name="password"
       />
       <LabeledCheckBox
@@ -87,7 +113,7 @@ const RegisterFeature = () => {
         variant="fill-primary"
         type="submit"
       >
-        Login
+        Register
       </Button>
     </form>
   );

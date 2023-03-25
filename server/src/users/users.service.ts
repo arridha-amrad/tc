@@ -24,8 +24,12 @@ export class UsersService {
   }
 
   async create(data: TRegisterDTO): Promise<User> {
+    const { firstName, lastName, ...rest } = data;
     return this.prisma.user.create({
-      data,
+      data: {
+        ...rest,
+        fullName: `${firstName} ${lastName}`,
+      },
     });
   }
 
