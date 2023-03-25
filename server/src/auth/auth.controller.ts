@@ -102,7 +102,6 @@ export class AuthController {
       if (!req.user) throw new NotFoundException('User not found');
       const user = req.user as Omit<User, 'password'>;
       const accessToken = this.authService.createAccessToken(user);
-
       const storedToken = await this.refTokenService.create({
         token: '',
         userId: user.id,

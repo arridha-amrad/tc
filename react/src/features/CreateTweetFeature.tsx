@@ -7,6 +7,7 @@ import PhotoIcon from "@heroicons/react/24/solid/PhotoIcon";
 import TweetImagePreview from "../components/TweetImagePreview";
 import { useUI } from "../context/ui/uIContext";
 import { v4 } from "uuid";
+import useCreateTweet from "../hooks/tweet/useCreateTweet";
 
 const CreateTweetFeature = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -16,8 +17,10 @@ const CreateTweetFeature = () => {
 
   const { createToast } = useUI();
 
+  const { isLoading, mutateAsync } = useCreateTweet();
+
   const create = async () => {
-    // formData.append("body", state.tweet);
+    formData.append("body", state.tweet);
     // if (filesToUpload) {
     //   for (let i = 0; i < filesToUpload.length; i++) {
     //     formData.append("images", filesToUpload[i]);
@@ -25,15 +28,17 @@ const CreateTweetFeature = () => {
     // }
     setIsLoading(true);
     try {
+      await mutateAsync(formData);
       const id = v4();
       createToast(`creating ${id} ...`);
+      setState({ ...state, tweet: "" });
     } catch (error) {
     } finally {
       setIsLoading(false);
     }
   };
 
-  const { onChange, onSubmit, state, isLoading, setIsLoading } = useForm(
+  const { onChange, onSubmit, state, setIsLoading, setState } = useForm(
     {
       tweet: "",
     },

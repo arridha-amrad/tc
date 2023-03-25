@@ -56,12 +56,12 @@ model Post {
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Likes     Like[]
-  Medias    Media[]
-  Tweets    Tweet[]
   parentId  String?
   parent    Post?    @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   children  Post[]   @relation("ParentChild")
+  Likes     Like[]
+  Medias    Media[]
+  Tweets    Tweet[]
 
   @@map("posts")
 }
