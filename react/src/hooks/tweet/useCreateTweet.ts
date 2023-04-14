@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TweetDTO } from "../../api/dtos/tweet.dto";
 import { createTweetAPI } from "../../api/tweet.api";
 
 const useCreateTweet = () => {

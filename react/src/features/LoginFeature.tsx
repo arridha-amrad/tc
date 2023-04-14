@@ -9,28 +9,22 @@ import { useNavigate } from "react-router-dom";
 import { LoginDTO } from "../api/dtos/auth.dto";
 
 const LoginFeature = () => {
-  const mutation = useLogin();
+  const { isLoading, mutateAsync } = useLogin();
   const navigate = useNavigate();
   const login = async () => {
-    setIsLoading(true);
     try {
-      await mutation.mutateAsync(state);
+      await mutateAsync(state);
       navigate("/", { replace: true });
     } catch (err: any) {
       setAlert({
         message: err.response.data.message,
         type: "danger",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const {
     onChange,
-    isLoading,
-    setIsLoading,
-    setState,
     onSubmit,
     state,
     alert,

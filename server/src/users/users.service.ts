@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { TRegisterDTO } from './dto/register.dto';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         ...rest,
-        fullName: `${firstName} ${lastName}`,
+        fullName: `${firstName} ${lastName}`.trim(),
       },
     });
   }

@@ -1,24 +1,21 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
+  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { TokenService } from 'src/token/token.service';
 import { Request } from 'express';
-import { Observable } from 'rxjs';
-import { TAccessTokenPayload } from './auth.type';
+import { COOKIE_ID } from '../constants';
 
 @Injectable()
-export class AccessGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+export class AuthGuard implements CanActivate {
+  constructor(private tokenService: TokenService) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const bearerToken = request.headers.authorization;
-    const refreshToken = request.cookies.refreshToken;
+    const refreshToken = request.cookies[COOKIE_ID];
     const token = bearerToken?.split(' ')[1];
 
     if (!token) {
@@ -28,8 +25,11 @@ export class AccessGuard implements CanActivate {
       return false;
     }
     try {
-      const payload = this.jwtService.verify(token);
-      request.user = payload as TAccessTokenPayload;
+      const payload = await this.tokenService.verifyToken({
+        token,
+        type: 'AccessToken',
+      });
+      request.app.locals.userId = payload.userId;
       return true;
     } catch (error) {
       console.error('access guard error', JSON.stringify(error));

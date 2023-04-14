@@ -8,18 +8,9 @@ const useLogin = () => {
   const mutation = useMutation({
     mutationKey: ["auth"],
     mutationFn: (body: LoginDTO) => loginAPI(body),
-    onSuccess({ data }, variables, context) {
-      console.log("result : ", data);
-      console.log("context : ", context);
-      setToken(data.accessToken);
-    },
-    onError(error, variables, context) {
-      console.log("on error");
-    },
-    onSettled(data, error, variables, context) {
-      console.log("on settled");
-      console.log(data);
-      console.log(error);
+    onSuccess(data) {
+      setToken(data.token);
+      qc.setQueryData(["auth"], data.user);
     },
   });
   return mutation;

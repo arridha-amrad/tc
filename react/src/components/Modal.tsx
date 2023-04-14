@@ -1,7 +1,8 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import CloseIcon from "@heroicons/react/24/solid/XMarkIcon";
 import IconButton from "./IconButton";
+import useOnClickOutside from "../hooks/useOnClickOutside";
 
 type TModal = {
   children: ReactNode;
@@ -19,12 +20,10 @@ const Modal: FC<TModal> = ({ children, isOpen, closeModal }) => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.addEventListener("keydown", close);
-      // document.addEventListener("click", closeOutside);
     }
     return () => {
       document.body.style.overflow = "auto";
       document.removeEventListener("keydown", close);
-      // document.removeEventListener("click", closeOutside);
     };
   }, [isOpen]);
 
@@ -46,7 +45,7 @@ const Modal: FC<TModal> = ({ children, isOpen, closeModal }) => {
         </div>
         <div
           onClick={(e) => e.stopPropagation()}
-          className="dark:bg-black p-2 overflow-auto border dark:border-slate-700 border-slate-400 rounded-lg"
+          className="dark:bg-black bg-white p-2 overflow-auto border dark:border-slate-700 border-slate-400 rounded-lg"
         >
           {children}
         </div>

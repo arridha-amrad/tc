@@ -23,9 +23,9 @@ axiosInstance.interceptors.response.use(
     if (err?.response?.status === 401) {
       try {
         const prevRequest = err.config;
-        const { data } = await refreshTokenAPI();
-        setToken(data.accessToken);
-        prevRequest.headers["Authorization"] = `Bearer ${data.accessToken}`;
+        const data = await refreshTokenAPI();
+        setToken(data.token);
+        prevRequest.headers["Authorization"] = `Bearer ${data.token}`;
         return axiosInstance(prevRequest);
       } catch (err) {
         window.location.replace("/login");

@@ -1,22 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
-import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './local.strategy';
-import { AuthController } from './auth.controller';
-import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
-import { RefTokenModule } from 'src/ref-token/ref-token.module';
-import jwtModuleOptions from './jwtModuleOptions';
+import { LogoutController } from './controllers/logout';
+import { TokenModule } from 'src/token/token.module';
+import { LoginController } from './controllers/login';
+import { RefreshTokenService } from './services/refresh-token.service';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { MeController } from './controllers/me';
+import { RefreshTokenController } from './controllers/refreshToken';
 
 @Module({
-  imports: [
-    RefTokenModule,
-    UsersModule,
-    PassportModule,
-    JwtModule.register(jwtModuleOptions),
+  imports: [UsersModule, TokenModule, PrismaModule],
+  providers: [RefreshTokenService],
+  controllers: [
+    LogoutController,
+    LoginController,
+    MeController,
+    RefreshTokenController,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  controllers: [AuthController],
 })
 export class AuthModule {}

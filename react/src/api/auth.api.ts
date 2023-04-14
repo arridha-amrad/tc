@@ -6,12 +6,21 @@ import {
   RefreshTokenResponse,
 } from "./response/auth.response";
 
-export const loginAPI = async (body: LoginDTO) =>
-  axiosInstance.post<LoginResponse>("/auth/login", body);
+export const loginAPI = async (body: LoginDTO) => {
+  const { data } = await axiosInstance.post<LoginResponse>("/auth/login", body);
+  return data;
+};
 
 export const logoutAPI = async () => axiosInstance.get("/auth/logout");
 
-export const refreshTokenAPI = async () =>
-  axiosInstance.get<RefreshTokenResponse>("/auth/refresh-token");
+export const refreshTokenAPI = async () => {
+  const { data } = await axiosInstance.get<RefreshTokenResponse>(
+    "/auth/refresh-token"
+  );
+  return data;
+};
 
-export const meAPI = async () => axiosInstance.get<MeResponse>("/auth/me");
+export const meAPI = async () => {
+  const { data } = await axiosInstance.get<MeResponse>("/auth/me");
+  return data;
+};

@@ -2,11 +2,11 @@ import { User } from "./user.response";
 
 export type LoginResponse = {
   user: User;
-  accessToken: string;
+  token: string;
 };
 
 export type RefreshTokenResponse = {
-  accessToken: string;
+  token: string;
 };
 
 export type MeResponse = User;
