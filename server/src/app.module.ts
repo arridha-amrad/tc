@@ -8,17 +8,21 @@ import { TweetsModule } from './tweets/tweets.module';
 import { PostsModule } from './posts/posts.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
-import { TokenModule } from './token/token.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    MulterModule.register({
+      dest: './uploads',
+    }),
     UsersModule,
     AuthModule,
     TweetsModule,
     PostsModule,
     PrismaModule,
-    TokenModule,
+    CloudinaryModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

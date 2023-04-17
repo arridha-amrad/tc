@@ -9,6 +9,6 @@ async function bootstrap() {
   });
   app.use(cp());
 
-  await app.listen(process.env.PORT!);
+  await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();

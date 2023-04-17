@@ -56,9 +56,6 @@ model Post {
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  parentId  String?
-  parent    Post?    @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  children  Post[]   @relation("ParentChild")
   Likes     Like[]
   Medias    Media[]
   Tweets    Tweet[]
@@ -75,6 +72,9 @@ model Tweet {
   postId    String
   userId    String
   isRetweet Boolean  @default(false)
+  parentId  String?
+  parent    Tweet?   @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Tweet[]  @relation("ParentChild")
 
   @@map("tweets")
 }

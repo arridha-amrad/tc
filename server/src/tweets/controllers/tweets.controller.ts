@@ -10,7 +10,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 // import { AccessGuard } from 'src/auth/access.guard';
 import { PostsService } from 'src/posts/posts.service';
-import { TweetsService } from './tweets.service';
+import { TweetsService } from '../services/tweets.service';
 
 @Controller('api/tweets')
 export class TweetsController {

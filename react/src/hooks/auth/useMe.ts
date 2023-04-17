@@ -8,6 +8,7 @@ const useMe = () => {
   const query = useQuery({
     enabled: !authenticatedUser,
     queryFn: meAPI,
+    retry: 0,
     queryKey: ["auth"],
     onSuccess(data) {
       qc.setQueryData(["auth"], data);
@@ -15,7 +16,7 @@ const useMe = () => {
     onSettled: (data) => {
       qc.setQueryData(["auth"], data);
     },
-    initialData: qc.getQueryData(["auth"]),
+    initialData: authenticatedUser,
   });
   return query;
 };

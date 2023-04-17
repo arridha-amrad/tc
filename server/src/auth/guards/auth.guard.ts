@@ -4,14 +4,14 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { TokenService } from 'src/token/token.service';
 import { Request } from 'express';
 import { COOKIE_ID } from '../constants';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private tokenService: TokenService) {}
-
+  constructor(private jwtService: JwtService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const bearerToken = request.headers.authorization;
@@ -25,11 +25,12 @@ export class AuthGuard implements CanActivate {
       return false;
     }
     try {
-      const payload = await this.tokenService.verifyToken({
+      const { user } = this.jwtService.verify<{ user: Omit<User, 'password'> }>(
         token,
-        type: 'AccessToken',
-      });
-      request.app.locals.userId = payload.userId;
+        { maxAge: '60s' },
+      );
+      request.user = user;
+
       return true;
     } catch (error) {
       console.error('access guard error', JSON.stringify(error));

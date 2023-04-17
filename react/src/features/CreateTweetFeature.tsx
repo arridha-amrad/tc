@@ -20,12 +20,12 @@ const CreateTweetFeature = () => {
   const { isLoading, mutateAsync } = useCreateTweet();
 
   const create = async () => {
-    formData.append("body", state.tweet);
-    // if (filesToUpload) {
-    //   for (let i = 0; i < filesToUpload.length; i++) {
-    //     formData.append("images", filesToUpload[i]);
-    //   }
-    // }
+    formData.append("description", state.tweet);
+    if (filesToUpload) {
+      for (let i = 0; i < filesToUpload.length; i++) {
+        formData.append("files", filesToUpload[i]);
+      }
+    }
     setIsLoading(true);
     try {
       await mutateAsync(formData);

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AUTHOR_DATA, POST_COUNT, POST_DATA } from 'src/posts/post.constants';
+import { AUTHOR_DATA, POST_COUNT } from 'src/posts/post.constants';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { TweetDTO } from './tweet.dto';
+import { TweetDTO } from '../dto/tweet.dto';
 
 @Injectable()
 export class TweetsService {
