@@ -30,8 +30,10 @@ const CreateTweetFeature = () => {
     try {
       await mutateAsync(formData);
       const id = v4();
-      createToast(`creating ${id} ...`);
+      createToast("New post created");
       setState({ ...state, tweet: "" });
+      setFilesToPreview([]);
+      setFilesToUpload(null);
     } catch (error) {
     } finally {
       setIsLoading(false);

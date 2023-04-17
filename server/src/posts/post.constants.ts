@@ -5,7 +5,6 @@ export const QUERY_MEDIAS = {
 };
 
 export const POST_COUNT = {
-  children: true,
   Likes: true,
   Medias: true,
   Tweets: true,

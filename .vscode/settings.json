@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["dtos", "heroicons", "jwtid", "nestjs", "tanstack"]
+  "cSpell.words": [
+    "cloudinary",
+    "dtos",
+    "heroicons",
+    "jwtid",
+    "nestjs",
+    "tanstack"
+  ]
 }

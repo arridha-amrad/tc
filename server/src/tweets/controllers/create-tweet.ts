@@ -16,12 +16,17 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { Request } from 'express';
 import { User } from '.prisma/client';
 import { diskStorage } from 'multer';
+import { MediaService } from '../services/medias.service';
+import * as fs from 'fs';
+import { TweetsService } from '../services/tweets.service';
 
 @Controller(TWEET_BASE_ROUTE)
 export class CreateTweetController {
   constructor(
     private readonly postService: PostsService,
+    private readonly mediaService: MediaService,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly tweetService: TweetsService,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -38,17 +43,28 @@ export class CreateTweetController {
     @Body() body: { description: string },
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    console.log(files);
-
     try {
       const user = req.user as User;
-      await this.postService.create({
+      const post = await this.postService.create({
         authorId: user.id,
         body: body.description,
       });
-      files.map(async (file) => {
-        await this.cloudinaryService.upload(file);
+      const urls: Array<string> = [];
+      for (let i = 0; i < files.length; i++) {
+        const data = await this.cloudinaryService.upload(files[i]);
+        urls.push(data.secure_url);
+      }
+      await this.mediaService.create(urls, post.id);
+
+      const tweet = await this.tweetService.create({
+        isRetweet: false,
+        postId: post.id,
+        userId: user.id,
       });
+
+      files.forEach((file) => fs.unlinkSync(file.path));
+
+      return tweet;
     } catch (error) {
       console.log(error);
     }

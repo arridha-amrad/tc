@@ -9,7 +9,7 @@ const LabeledCheckBox: FC<
     <div className="mb-4 flex items-center">
       <input
         {...props}
-        id="default-Labeled"
+        id="default-checkbox"
         type="checkbox"
         className="h-5 w-5 cursor-pointer rounded-md text-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-500 focus:ring-offset-2 checked:bg-blue-500 dark:checked:bg-blue-600"
       />

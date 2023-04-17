@@ -46,6 +46,7 @@ const LoginFeature = () => {
       {!!alert && <Alert type={alert.type}>{alert.message}</Alert>}
 
       <FloatingLabelInput
+        id="loginIdentity"
         labelText="Email or Username"
         type="text"
         onChange={onChange}
@@ -53,6 +54,7 @@ const LoginFeature = () => {
         name="identity"
       />
       <FloatingLabelInput
+        id="loginPassword"
         labelText="Password"
         type={`${isShowPassword ? "text" : "password"}`}
         onChange={onChange}
@@ -61,7 +63,7 @@ const LoginFeature = () => {
       />
       <LabeledCheckBox
         checked={isShowPassword}
-        onChange={(e) => setIsShowPassword((val) => !val)}
+        onChange={() => setIsShowPassword((val) => !val)}
       >
         Show Password
       </LabeledCheckBox>

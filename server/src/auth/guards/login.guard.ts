@@ -9,12 +9,14 @@ export class LoginGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const bearerToken = request.cookies[COOKIE_ID];
-    const [type, token] = bearerToken.split(' ');
 
-    if (type === 'Bearer') {
-      const storedToken = await this.refTokenService.findOne(token);
-      if (storedToken) {
-        await this.refTokenService.remove(storedToken.id);
+    if (bearerToken) {
+      const [type, token] = bearerToken.split(' ');
+      if (type === 'Bearer') {
+        const storedToken = await this.refTokenService.findOne(token);
+        if (storedToken) {
+          await this.refTokenService.remove(storedToken.id);
+        }
       }
     }
 

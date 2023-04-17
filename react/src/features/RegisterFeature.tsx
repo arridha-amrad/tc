@@ -63,6 +63,7 @@ const RegisterFeature = () => {
 
       <div className="flex flex-1 gap-3">
         <FloatingLabelInput
+          id="registerFirstName"
           labelText="First Name"
           type="text"
           onChange={onChange}
@@ -70,6 +71,7 @@ const RegisterFeature = () => {
           name="firstName"
         />
         <FloatingLabelInput
+          id="registerLastName"
           labelText="Last Name"
           type="text"
           onChange={onChange}
@@ -79,6 +81,7 @@ const RegisterFeature = () => {
       </div>
 
       <FloatingLabelInput
+        id="registerEmailAddress"
         labelText="Email Address"
         type="email"
         onChange={onChange}
@@ -86,6 +89,7 @@ const RegisterFeature = () => {
         name="email"
       />
       <FloatingLabelInput
+        id="registerUsername"
         labelText="Username"
         type="text"
         onChange={onChange}
@@ -93,6 +97,7 @@ const RegisterFeature = () => {
         name="username"
       />
       <FloatingLabelInput
+        id="registerPassword"
         labelText="Password"
         type={`${isShowPassword ? "text" : "password"}`}
         onChange={onChange}
