@@ -1,5 +1,5 @@
 import ArrowLeft from "@heroicons/react/24/solid/ArrowLeftIcon";
-import { useNavigate, useRoutes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();

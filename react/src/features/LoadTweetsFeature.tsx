@@ -1,9 +1,9 @@
 import Spinner from "../components/Spinner";
-import TweetCard from "../components/TweetCard/TweetCard";
 import useLoadTweets from "../hooks/tweet/useLoadTweets";
 
 const LoadTweetFeature = () => {
   const { data, isPaused, isLoading } = useLoadTweets();
+
   if (isLoading || isPaused) {
     return (
       <div className="h-screen, w-full flex items-center justify-center mt-10">
@@ -11,6 +11,8 @@ const LoadTweetFeature = () => {
       </div>
     );
   }
+  if (data.length <= 0) return null;
+
   return (
     <div className="w-full border dark:border-slate-700 mt-5 rounded-lg">
       {/* <TweetCard />

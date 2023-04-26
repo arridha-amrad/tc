@@ -5,7 +5,6 @@ export type TBtnStatus = "ok" | "loading" | "not-allowed";
 interface IProps {
   children: ReactNode;
   size: "small" | "normal";
-  status: TBtnStatus;
   variant:
     | "fill-primary"
     | "fill-danger"
@@ -16,17 +15,10 @@ interface IProps {
 const Button: FC<IProps & ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
   size,
-  status,
   variant,
   ...props
 }) => {
   const btnSize = size === "small" ? "px-5 py-1 text-sm" : "px-5 py-2.5";
-  const cursor =
-    status === "loading"
-      ? "cursor-progress"
-      : status === "ok"
-      ? "cursor-pointer"
-      : "cursor-not-allowed";
   const btnVariant =
     variant === "fill-primary"
       ? "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-800 disabled:bg-blue-400 disabled:dark:bg-blue-900"
@@ -38,7 +30,7 @@ const Button: FC<IProps & ButtonHTMLAttributes<HTMLButtonElement>> = ({
   return (
     <button
       {...props}
-      className={`rounded-lg text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base ${cursor} ${btnSize} ${btnVariant}`}
+      className={`rounded-lg text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base cursor-pointer ${btnSize} ${btnVariant}`}
     >
       {children}
     </button>

@@ -6,5 +6,6 @@
     "jwtid",
     "nestjs",
     "tanstack"
-  ]
+  ],
+  "vue.features.codeActions.enable": false
 }

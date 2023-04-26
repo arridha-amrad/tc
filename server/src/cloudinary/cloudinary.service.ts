@@ -20,7 +20,7 @@ export class CloudinaryService {
             quality: 85,
           },
         },
-        (error, _) => {
+        (error) => {
           if (error) {
             throw error;
           }

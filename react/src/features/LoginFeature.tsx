@@ -3,7 +3,6 @@ import useForm from "../hooks/useForm";
 import Button from "../components/Button";
 import LabeledCheckBox from "../components/LabeledCheckBox";
 import Alert from "../components/Alert";
-import setButtonStatus from "../utils/setButtonStatus";
 import useLogin from "../hooks/auth/useLogin";
 import { useNavigate } from "react-router-dom";
 import { LoginDTO } from "../api/dtos/auth.dto";
@@ -69,7 +68,6 @@ const LoginFeature = () => {
       </LabeledCheckBox>
 
       <Button
-        status={setButtonStatus(state, isLoading)}
         disabled={!identity || !password}
         size="normal"
         variant="fill-primary"

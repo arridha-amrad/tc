@@ -37,7 +37,7 @@ export class CreateTweetController {
       }),
     }),
   )
-  @Post('create')
+  @Post()
   async create(
     @Req() req: Request,
     @Body() body: { description: string },
@@ -45,11 +45,13 @@ export class CreateTweetController {
   ) {
     try {
       const user = req.user as User;
+      const urls: Array<string> = [];
+
       const post = await this.postService.create({
         authorId: user.id,
         body: body.description,
       });
-      const urls: Array<string> = [];
+
       for (let i = 0; i < files.length; i++) {
         const data = await this.cloudinaryService.upload(files[i]);
         urls.push(data.secure_url);

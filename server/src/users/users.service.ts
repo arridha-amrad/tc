@@ -28,7 +28,7 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         ...rest,
-        fullName: `${firstName} ${lastName}`.trim(),
+        fullname: `${firstName} ${lastName}`.trim(),
       },
     });
   }

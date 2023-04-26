@@ -9,6 +9,7 @@ import setButtonStatus from "../utils/setButtonStatus";
 
 const RegisterFeature = () => {
   const register = async () => {
+    setAlert(null);
     try {
       setIsLoading(true);
       const result = await registerAPI(state);
@@ -112,8 +113,7 @@ const RegisterFeature = () => {
       </LabeledCheckBox>
 
       <Button
-        status={setButtonStatus(state, isLoading)}
-        disabled={!email || !username || !password}
+        disabled={!email || !username || !password || !firstName}
         size="normal"
         variant="fill-primary"
         type="submit"

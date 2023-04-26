@@ -30,7 +30,7 @@ const ForgotPasswordFeature = () => {
         name="email"
       />
 
-      <Button size="normal" variant="fill-primary" type="submit">
+      <Button status="ok" size="normal" variant="fill-primary" type="submit">
         Send
       </Button>
     </form>

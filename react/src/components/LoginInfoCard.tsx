@@ -2,10 +2,9 @@ import { useRef, useState } from "react";
 import Avatar from "./Avatar";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import LogoutFeature from "../features/LogoutFeature";
-import SwitchThemeFeature from "../features/SwitchThemeFeature";
+import SwitchThemeFeature from "../features/ChangeThemeFeature/SwitchThemeV2";
 import useMe from "../hooks/auth/useMe";
 import Spinner from "./Spinner";
-import { User } from "../api/response/user.response";
 
 const LoginInfoCard = () => {
   const [isOpen, setIsOpen] = useState(false);
