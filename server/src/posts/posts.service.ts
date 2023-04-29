@@ -15,4 +15,8 @@ export class PostsService {
       },
     });
   }
+
+  async findById(id: string) {
+    return this.prisma.post.findFirst({ where: { id } });
+  }
 }

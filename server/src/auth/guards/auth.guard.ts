@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     try {
       const { user } = this.jwtService.verify<{ user: Omit<User, 'password'> }>(
         token,
-        { maxAge: '60s' },
+        { maxAge: '1h' },
       );
       request.user = user;
 

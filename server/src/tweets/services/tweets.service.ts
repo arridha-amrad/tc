@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AUTHOR_DATA, POST_COUNT } from 'src/posts/post.constants';
+import { AUTHOR_DATA, MEDIA_DATA, POST_COUNT } from 'src/posts/post.constants';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TweetDTO } from '../dto/tweet.dto';
 
@@ -7,8 +7,11 @@ import { TweetDTO } from '../dto/tweet.dto';
 export class TweetsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async loads() {
+  async fetchHomePosts({ userId }: { userId: string }) {
     return this.prismaService.tweet.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         post: {
           include: {
@@ -19,8 +22,11 @@ export class TweetsService {
               select: AUTHOR_DATA,
             },
             Medias: {
-              select: {
-                url: true,
+              select: MEDIA_DATA,
+            },
+            Likes: {
+              where: {
+                userId,
               },
             },
           },
@@ -45,10 +51,18 @@ export class TweetsService {
               select: AUTHOR_DATA,
             },
             Medias: {
-              select: {
-                url: true,
+              select: MEDIA_DATA,
+            },
+            Likes: {
+              where: {
+                userId: data.userId,
               },
             },
+          },
+        },
+        parent: {
+          select: {
+            post: { include: { author: { select: AUTHOR_DATA } } },
           },
         },
         user: {

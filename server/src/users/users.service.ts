@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { TRegisterDTO } from './dto/register.dto';
+import { TRegisterDTO } from './dto/user.dto';
+import { AUTHOR_DATA } from 'src/posts/post.constants';
 
 @Injectable()
 export class UsersService {
@@ -28,7 +29,7 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         ...rest,
-        fullname: `${firstName} ${lastName}`.trim(),
+        fullname: `${firstName.trim()} ${lastName.trim()}`.trim(),
       },
     });
   }
@@ -39,5 +40,21 @@ export class UsersService {
 
   async findById(id: string) {
     return this.prisma.user.findFirst({ where: { id } });
+  }
+
+  async search(name: string) {
+    return this.prisma.user.findMany({
+      where: {
+        OR: [
+          {
+            username: { contains: name, mode: 'insensitive' },
+          },
+          {
+            fullname: { contains: name, mode: 'insensitive' },
+          },
+        ],
+      },
+      select: AUTHOR_DATA,
+    });
   }
 }

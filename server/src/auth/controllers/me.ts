@@ -6,7 +6,7 @@ import { Request } from 'express';
 @Controller(AUTH_BASE_ROUTE)
 export class MeController {
   @UseGuards(AuthGuard)
-  @Get('me')
+  @Get()
   async me(@Req() req: Request) {
     try {
       return req.user;

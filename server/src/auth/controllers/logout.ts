@@ -5,7 +5,7 @@ import { AUTH_BASE_ROUTE, COOKIE_ID, cookieOptions } from '../constants';
 
 @Controller(AUTH_BASE_ROUTE)
 export class LogoutController {
-  constructor(private refTokenService: RefreshTokenService) {}
+  constructor(private readonly refTokenService: RefreshTokenService) {}
 
   @Get('logout')
   async logout(@Req() req: Request, @Res() res: Response) {

@@ -40,7 +40,7 @@ export class RefreshTokenController {
 
       const newAccToken = this.jwtService.sign(
         { user: rest },
-        { expiresIn: '60s' },
+        { expiresIn: '1h' },
       );
 
       const newRefToken = this.jwtService.sign(

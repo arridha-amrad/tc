@@ -50,7 +50,7 @@ export class LoginController {
 
       const accessToken = this.jwtService.sign(
         { user: rest },
-        { expiresIn: '60s' },
+        { expiresIn: '1h' },
       );
 
       const refreshToken = this.jwtService.sign(

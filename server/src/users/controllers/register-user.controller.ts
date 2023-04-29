@@ -7,9 +7,10 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../users.service';
 import { hash } from 'argon2';
-import { TRegisterDTO } from '../dto/register.dto';
+import { TRegisterDTO } from '../dto/user.dto';
+import { USER_BASE_ROUTE } from '../users.constants';
 
-@Controller('/api/users')
+@Controller(USER_BASE_ROUTE)
 export class RegisterUserController {
   constructor(private readonly userService: UsersService) {}
 
